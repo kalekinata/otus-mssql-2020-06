@@ -1,5 +1,5 @@
---1. Все товары, в названии которых есть "urgent" или название начинается с "Animal"
---Таблицы: Warehouse.StockItems.
+1. Р’СЃРµ С‚РѕРІР°СЂС‹, РІ РЅР°Р·РІР°РЅРёРё РєРѕС‚РѕСЂС‹С… РµСЃС‚СЊ "urgent" РёР»Рё РЅР°Р·РІР°РЅРёРµ РЅР°С‡РёРЅР°РµС‚СЃСЏ СЃ "Animal"
+--РўР°Р±Р»РёС†С‹: Warehouse.StockItems.
 
 SELECT StockItemID, StockItemName
 FROM Warehouse.StockItems
