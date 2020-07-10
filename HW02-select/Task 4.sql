@@ -1,11 +1,11 @@
---4. Заказы поставщикам (Purchasing.Suppliers), которые были исполнены в январе 2014 года с доставкой Air Freight или Refrigerated Air Freight (DeliveryMethodName).
---Вывести:
---* способ доставки (DeliveryMethodName)
---* дата доставки
---* имя поставщика
---* имя контактного лица принимавшего заказ (ContactPerson)
+--4. Р—Р°РєР°Р·С‹ РїРѕСЃС‚Р°РІС‰РёРєР°Рј (Purchasing.Suppliers), РєРѕС‚РѕСЂС‹Рµ Р±С‹Р»Рё РёСЃРїРѕР»РЅРµРЅС‹ РІ СЏРЅРІР°СЂРµ 2014 РіРѕРґР° СЃ РґРѕСЃС‚Р°РІРєРѕР№ Air Freight РёР»Рё Refrigerated Air Freight (DeliveryMethodName).
+--Р’С‹РІРµСЃС‚Рё:
+--* СЃРїРѕСЃРѕР± РґРѕСЃС‚Р°РІРєРё (DeliveryMethodName)
+--* РґР°С‚Р° РґРѕСЃС‚Р°РІРєРё
+--* РёРјСЏ РїРѕСЃС‚Р°РІС‰РёРєР°
+--* РёРјСЏ РєРѕРЅС‚Р°РєС‚РЅРѕРіРѕ Р»РёС†Р° РїСЂРёРЅРёРјР°РІС€РµРіРѕ Р·Р°РєР°Р· (ContactPerson)
 
---Таблицы: Purchasing.Suppliers, Purchasing.PurchaseOrders, Application.DeliveryMethods, Application.People.
+--РўР°Р±Р»РёС†С‹: Purchasing.Suppliers, Purchasing.PurchaseOrders, Application.DeliveryMethods, Application.People.
 
 SELECT  DeliveryMethodName,CONVERT(VarChar, OrderDate, 104), SupplierName, FullName
 FROM Purchasing.PurchaseOrders p 
