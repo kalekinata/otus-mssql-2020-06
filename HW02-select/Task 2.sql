@@ -1,14 +1,14 @@
---2. Поставщиков (Suppliers), у которых не было сделано ни одного заказа (PurchaseOrders). Сделать через JOIN, с подзапросом задание принято не будет.
---Таблицы: Purchasing.Suppliers, Purchasing.PurchaseOrders.
+-2. РџРѕСЃС‚Р°РІС‰РёРєРѕРІ (Suppliers), Сѓ РєРѕС‚РѕСЂС‹С… РЅРµ Р±С‹Р»Рѕ СЃРґРµР»Р°РЅРѕ РЅРё РѕРґРЅРѕРіРѕ Р·Р°РєР°Р·Р° (PurchaseOrders). РЎРґРµР»Р°С‚СЊ С‡РµСЂРµР· JOIN, СЃ РїРѕРґР·Р°РїСЂРѕСЃРѕРј Р·Р°РґР°РЅРёРµ РїСЂРёРЅСЏС‚Рѕ РЅРµ Р±СѓРґРµС‚.
+--РўР°Р±Р»РёС†С‹: Purchasing.Suppliers, Purchasing.PurchaseOrders.
 
--------------1 вариант---------
+-------------1 РІР°СЂРёР°РЅС‚---------
 SELECT S.SupplierID, S.SupplierName
 FROM Purchasing.Suppliers S
 JOIN Purchasing.PurchaseOrders P ON S.SupplierID = P.SupplierID
 GROUP BY S.SupplierID, S.SupplierName
 HAVING COUNT(PurchaseOrderID) = 0
 
-------------2 вариант----------
+------------2 РІР°СЂРёР°РЅС‚----------
 SELECT S.SupplierID, S.SupplierName
 FROM Purchasing.Suppliers S
 LEFT JOIN Purchasing.PurchaseOrders P ON S.SupplierID = P.SupplierID
