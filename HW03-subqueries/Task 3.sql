@@ -27,8 +27,7 @@ WHERE TransactionAmount = ANY(SELECT TOP 5 TransactionAmount
 SELECT CustomerID, FullName, PersonID
 FROM Sales.CustomerTransactions CT
 JOIN Application.People P ON CT.LastEditedBy = P.PersonID
-WHERE TransactionAmount in ( Select * 
-							FROM TOP5Customer)
+WHERE TransactionAmount in ( Select * FROM TOP5Customer)
 
 --------CTE. 2 вариант---------
 ;WITH TOP5Customer as
@@ -40,5 +39,4 @@ WHERE TransactionAmount in ( Select *
 SELECT CustomerID, FullName, PersonID
 FROM Sales.CustomerTransactions CT
 JOIN Application.People P ON CT.LastEditedBy = P.PersonID
-WHERE TransactionAmount = ANY ( Select * 
-							FROM TOP5Customer)
+WHERE TransactionAmount = ANY ( Select * FROM TOP5Customer)
