@@ -4,4 +4,4 @@ SELECT p.PersonID, p.FullName
 FROM Application.People p
 WHERE EXISTS(SELECT *
 		FROM Sales.Invoices i
-		WHERE p.IsSalesperson = i.CustomerID AND (InvoiceID IS NULL) AND InvoiceDate = '2015-07-04')
+		WHERE p.PersonID = i.CustomerID AND p.IsSalesperson=1 AND (InvoiceID IS NULL) AND InvoiceDate = '2015-07-04')
