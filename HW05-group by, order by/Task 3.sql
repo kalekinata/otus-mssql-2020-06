@@ -11,14 +11,14 @@
 
 Продажи смотреть в таблице Sales.Invoices и связанных таблицах.*/
 
-SELECT DATEPART(year,InvoiceDate) as year,
-	DATEPART(month,InvoiceDate) as month,
+SELECT DATEPART(year,i.InvoiceDate) as year,
+	DATEPART(month,i.InvoiceDate) as month,
 	StockItemName,
 	SUM(s.UnitPrice) as sum,
-	COUNT(StockItemName) as kolvo
+	COUNT(s.StockItemName) as kolvo
 FROM Sales.Invoices i
 JOIN Sales.InvoiceLines il ON i.InvoiceID = il.InvoiceID
 JOIN Warehouse.StockItems s ON il.StockItemID = s.StockItemID
-GROUP BY DATEPART(year,InvoiceDate), DATEPART(month,InvoiceDate),StockItemName
-HAVING COUNT(StockItemName) < 50
-ORDER BY DATEPART(year,InvoiceDate), DATEPART(month,InvoiceDate)
+WHERE il.Quantity < 50
+GROUP BY DATEPART(year,i.InvoiceDate), DATEPART(month,i.InvoiceDate),s.StockItemName
+ORDER BY DATEPART(year,i.InvoiceDate), DATEPART(month,i.InvoiceDate)

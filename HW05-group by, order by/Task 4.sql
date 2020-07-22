@@ -69,3 +69,22 @@ EmployeeID Name Title EmployeeLevel
 	INNER JOIN Employees es ON e.ManagerID = es.EmployeeID
 )
 Select * from Employees
+
+;WITH Employees AS (
+	SELECT EmployeeID, 
+		CONCAT(FirstName,' ',LastName) as Name,
+		Title,
+		1 as EmployeeLevel
+	FROM MyEmployees
+	WHERE ManagerID IS NULL
+
+	UNION ALL
+
+	SELECT e.EmployeeID,
+		CONCAT(FirstName,' ',LastName) as Name ,
+		e.Title,
+		EmployeeLevel + 1
+	FROM MyEmployees e
+	INNER JOIN Employees es ON e.ManagerID = es.EmployeeID
+)
+Select * from Employees;

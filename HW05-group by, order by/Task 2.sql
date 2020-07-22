@@ -7,8 +7,8 @@
 
 Продажи смотреть в таблице Sales.Invoices и связанных таблицах.*/
 
-SELECT DATEPART(year,InvoiceDate) as year,
-	DATEPART(month,InvoiceDate) as month,
+SELECT DATEPART(year,i.InvoiceDate) as year,
+	DATEPART(month,i.InvoiceDate) as month,
 	SUM(il.UnitPrice) as sum
 FROM Sales.Invoices i
 JOIN Sales.InvoiceLines il ON i.InvoiceID = il.InvoiceID
