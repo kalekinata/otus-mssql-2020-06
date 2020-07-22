@@ -36,20 +36,36 @@ EmployeeID Name Title EmployeeLevel
 286 | | | Lynn Tsoflias Sales Representative 4 */
 
 ;WITH Employees AS (
-	SELECT EmployeeID, 
+	SELECT EmployeeID,
+		CASE WHEN Employeeid = 1
+			THEN ' '
+			WHEN Employeeid = 1
+			THEN '|'
+			WHEN Employeeid = 1
+			THEN '||'
+			WHEN Employeeid = 1
+			THEN '|||'
+			END Hierarchy,
 		CONCAT(FirstName,' ',LastName) as Name,
 		Title,
 		1 as EmployeeLevel
 	FROM MyEmployees
 	WHERE ManagerID IS NULL
-
 	UNION ALL
-
 	SELECT e.EmployeeID,
+		CASE WHEN EmployeeLevel = 0
+			THEN ' '
+			WHEN EmployeeLevel = 1
+			THEN '|'
+			WHEN EmployeeLevel = 2
+			THEN '||'
+			WHEN EmployeeLevel = 3
+			THEN '|||'
+			END Hierarchy,
 		CONCAT(FirstName,' ',LastName) as Name ,
 		e.Title,
 		EmployeeLevel + 1
 	FROM MyEmployees e
 	INNER JOIN Employees es ON e.ManagerID = es.EmployeeID
 )
-Select * from Employees;
+Select * from Employees
