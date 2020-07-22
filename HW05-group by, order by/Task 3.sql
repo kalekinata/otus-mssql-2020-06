@@ -15,6 +15,7 @@ SELECT DATEPART(year,i.InvoiceDate) as year,
 	DATEPART(month,i.InvoiceDate) as month,
 	StockItemName,
 	SUM(s.UnitPrice) as sum,
+	MIN(i.InvoiceDate) as first_date,
 	COUNT(s.StockItemName) as kolvo
 FROM Sales.Invoices i
 JOIN Sales.InvoiceLines il ON i.InvoiceID = il.InvoiceID
