@@ -1,6 +1,6 @@
-/* 7. РќР°РїРёС€РёС‚Рµ Р·Р°РїСЂРѕСЃ, РєРѕС‚РѕСЂС‹Р№ РІС‹Р±РёСЂР°РµС‚ 10 РєР»РёРµРЅС‚РѕРІ, РєРѕС‚РѕСЂС‹Рµ СЃРґРµР»Р°Р»Рё Р±РѕР»СЊС€Рµ 30 Р·Р°РєР°Р·РѕРІ Рё РїРѕСЃР»РµРґРЅРёР№ Р·Р°РєР°Р· Р±С‹Р» РЅРµ РїРѕР·РґРЅРµРµ Р°РїСЂРµР»СЏ 2016.*/
+/* 7. Напишите запрос, который выбирает 10 клиентов, которые сделали больше 30 заказов и последний заказ был не позднее апреля 2016.*/
 
-SELECT TOP 10 I.CustomerID, C.CustomerName
+SELECT DISTINCT TOP 10 I.CustomerID, C.CustomerName
 FROM Sales.Invoices I
 JOIN Sales.Customers C ON I.CustomerID = C.CustomerID
 where 30 < (SELECT count(OrderID)

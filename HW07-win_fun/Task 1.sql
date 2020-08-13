@@ -19,9 +19,9 @@ DROP TABLE IF EXISTS #progressive_total
 	SELECT distinct i.InvoiceID,
 	c.CustomerName,
 	i.InvoiceDate,
-	(SELECT SUM(il.UnitPrice)
+	(SELECT SUM(ct.TransactionAmount)
 	FROM Sales.Invoices i1
-	JOIN Sales.InvoiceLines il ON i1.InvoiceID = il.InvoiceID
+	JOIN Sales.CustomerTransactions ct ON i1.InvoiceID = ct.InvoiceID
 	WHERE MONTH(i1.InvoiceDate) = MONTH(i.InvoiceDate) and InvoiceDate >= '2015.01.01'
 	GROUP BY MONTH(i1.InvoiceDate)) as Progressive_Total
 FROM Sales.Invoices i
@@ -43,9 +43,9 @@ DECLARE @table table
 SELECT distinct i.InvoiceID,
 	c.CustomerName,
 	i.InvoiceDate,
-	(SELECT SUM(il.UnitPrice)
+	(SELECT SUM(ct.TransactionAmount)
 	FROM Sales.Invoices i1
-	JOIN Sales.InvoiceLines il ON i1.InvoiceID = il.InvoiceID
+	JOIN Sales.CustomerTransactions ct ON i1.InvoiceID = ct.InvoiceID
 	WHERE MONTH(i1.InvoiceDate) = MONTH(i.InvoiceDate) and InvoiceDate >= '2015.01.01'
 	GROUP BY MONTH(i1.InvoiceDate)
 	) as Progressive_Total

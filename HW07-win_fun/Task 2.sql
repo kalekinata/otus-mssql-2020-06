@@ -1,26 +1,26 @@
-/*2. Р•СЃР»Рё РІС‹ Р±СЂР°Р»Рё РїСЂРµРґР»РѕР¶РµРЅРЅС‹Р№ РІС‹С€Рµ Р·Р°РїСЂРѕСЃ, С‚Рѕ СЃРґРµР»Р°Р№С‚Рµ СЂР°СЃС‡РµС‚ СЃСѓРјРјС‹ РЅР°СЂР°СЃС‚Р°СЋС‰РёРј РёС‚РѕРіРѕРј СЃ РїРѕРјРѕС‰СЊСЋ РѕРєРѕРЅРЅРѕР№ С„СѓРЅРєС†РёРё.
-РЎСЂР°РІРЅРёС‚Рµ 2 РІР°СЂРёР°РЅС‚Р° Р·Р°РїСЂРѕСЃР° - С‡РµСЂРµР· windows function Рё Р±РµР· РЅРёС…. РќР°РїРёСЃР°С‚СЊ РєР°РєРѕР№ Р±С‹СЃС‚СЂРµРµ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ, СЃСЂР°РІРЅРёС‚СЊ РїРѕ set statistics time on;. */
+/*2. Если вы брали предложенный выше запрос, то сделайте расчет суммы нарастающим итогом с помощью оконной функции.
+Сравните 2 варианта запроса - через windows function и без них. Написать какой быстрее выполняется, сравнить по set statistics time on;. */
 
 set statistics time on;
 
---Р·Р°РїСЂРѕСЃ СЃ РѕРєРѕРЅРЅРѕР№ С„СѓРЅРєС†РёРµР№--
+--запрос с оконной функцией--
 SELECT DISTINCT i.InvoiceID,
 				c.CustomerName,
 				i.InvoiceDate,
-				(SUM(il.UnitPrice) OVER(ORDER BY MONTH(InvoiceDate))) as Progressive_Total
+				(SUM(ct.TransactionAmount) OVER(ORDER BY MONTH(InvoiceDate))) as Progressive_Total
 FROM Sales.Invoices i
-	JOIN Sales.InvoiceLines il ON il.InvoiceID = i.InvoiceID
+	JOIN Sales.CustomerTransactions ct ON i.InvoiceID = ct.InvoiceID
 	JOIN Sales.Customers c ON i.CustomerID = c.CustomerID
 WHERE InvoiceDate >= '2015.01.01'
 ORDER BY InvoiceID;
 
---Р·Р°РїСЂРѕСЃ СЃ РїРѕРґР·Р°РїСЂРѕСЃРѕРј--
+--запрос с подзапросом--
 SELECT distinct i.InvoiceID,
 				c.CustomerName,
 				i.InvoiceDate,
-				(SELECT SUM(il.UnitPrice)
+				(SELECT SUM(ct.TransactionAmount)
 					FROM Sales.Invoices i1
-						JOIN Sales.InvoiceLines il ON i1.InvoiceID = il.InvoiceID
+						JOIN Sales.CustomerTransactions ct ON i1.InvoiceID = ct.InvoiceID
 					WHERE MONTH(i1.InvoiceDate) = MONTH(i.InvoiceDate) and InvoiceDate >= '2015.01.01'
 					GROUP BY MONTH(i1.InvoiceDate)
 				) as Progressive_Total
@@ -29,5 +29,4 @@ FROM Sales.Invoices i
 WHERE InvoiceDate >= '2015.01.01'
 ORDER BY InvoiceID;
 
---Р—Р°РїСЂРѕСЃ СЃ РѕРєРѕРЅРЅРѕР№ С„СѓРЅРєС†РёРµР№ РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ Р±С‹СЃС‚СЂРµРµ, С‡РµРј Р·Р°РїСЂРѕСЃ СЃ РїРѕРґР·Р°РїСЂРѕСЃРѕРј.
---РџСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР° СЃ РѕРєРѕРЅРЅРѕР№ С„СѓРЅРєС†РёРµР№ РІСЂРµРјСЏ Р¦Рџ = 245 РјСЃ, РёСЃС‚РµРєС€РµРµ РІСЂРµРјСЏ = 245 РјСЃ, Р° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР° СЃ РїРѕРґР·Р°РїСЂРѕСЃРѕРј СЂРµРјСЏ Р¦Рџ = 625 РјСЃ, Р·Р°С‚СЂР°С‡РµРЅРЅРѕРµ РІСЂРµРјСЏ = 1575 РјСЃ.--
+--Запрос с оконной функцией выполняется быстрее, чем запрос с подзапросом. При выполнении запроса с оконной функцией время ЦП = 245 мс, истекшее время = 245 мс, а при выполнении запроса с подзапросом ремя ЦП = 625 мс, затраченное время = 1575 мс.--
