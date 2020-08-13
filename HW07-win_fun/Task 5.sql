@@ -1,10 +1,10 @@
-/*5. По каждому сотруднику выведите последнего клиента, которому сотрудник что-то продал. В результатах должны быть:
-  - ид и фамилия сотрудника,
-  - ид и название клиента,
-  - дата продажи,
-  - сумму сделки. */
+/*5. РџРѕ РєР°Р¶РґРѕРјСѓ СЃРѕС‚СЂСѓРґРЅРёРєСѓ РІС‹РІРµРґРёС‚Рµ РїРѕСЃР»РµРґРЅРµРіРѕ РєР»РёРµРЅС‚Р°, РєРѕС‚РѕСЂРѕРјСѓ СЃРѕС‚СЂСѓРґРЅРёРє С‡С‚Рѕ-С‚Рѕ РїСЂРѕРґР°Р». Р’ СЂРµР·СѓР»СЊС‚Р°С‚Р°С… РґРѕР»Р¶РЅС‹ Р±С‹С‚СЊ:
+  - РёРґ Рё С„Р°РјРёР»РёСЏ СЃРѕС‚СЂСѓРґРЅРёРєР°,
+  - РёРґ Рё РЅР°Р·РІР°РЅРёРµ РєР»РёРµРЅС‚Р°,
+  - РґР°С‚Р° РїСЂРѕРґР°Р¶Рё,
+  - СЃСѓРјРјСѓ СЃРґРµР»РєРё. */
 
---запрос с оконной функцией--
+--Р·Р°РїСЂРѕСЃ СЃ РѕРєРѕРЅРЅРѕР№ С„СѓРЅРєС†РёРµР№--
 SELECT s.SupplierID, s.SupplierName,
 LAST_VALUE(c.CustomerID) OVER(order by s.SupplierID), 
 c.CustomerName, i.InvoiceDate, 
@@ -15,7 +15,7 @@ JOIN Sales.Invoices i ON sit.InvoiceID = i.InvoiceID
 JOIN Sales.InvoiceLines il ON i.InvoiceID = il.InvoiceID
 JOIN Purchasing.Suppliers s ON sit.SupplierID = s.SupplierID
 
---запрос с подзапросом--
+--Р·Р°РїСЂРѕСЃ СЃ РїРѕРґР·Р°РїСЂРѕСЃРѕРј--
 SELECT s.SupplierID, s.SupplierName,
 	(SELECT TOP 1 CustomerID 
 		FROM Warehouse.StockItemTransactions si
