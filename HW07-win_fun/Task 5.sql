@@ -5,28 +5,17 @@
   - сумму сделки. */
 
 --запрос с оконной функцией--
-SELECT s.SupplierID, s.SupplierName,
-LAST_VALUE(c.CustomerID) OVER(order by s.SupplierID), 
-c.CustomerName, i.InvoiceDate, 
-SUM(il.UnitPrice) OVER(ORDER BY i.InvoiceID) AS Price
-FROM Warehouse.StockItemTransactions sit 
-JOIN Sales.Customers c ON sit.CustomerID = c.CustomerID
-JOIN Sales.Invoices i ON sit.InvoiceID = i.InvoiceID
-JOIN Sales.InvoiceLines il ON i.InvoiceID = il.InvoiceID
-JOIN Purchasing.Suppliers s ON sit.SupplierID = s.SupplierID
-
---запрос с подзапросом--
-SELECT s.SupplierID, s.SupplierName,
-	(SELECT TOP 1 CustomerID 
-		FROM Warehouse.StockItemTransactions si
-		WHERE InvoiceID = i.InvoiceID AND si.StockItemTransactionID = sit. StockItemTransactionID
-		ORDER BY InvoiceID DESC),
-	c.CustomerName,	 i.InvoiceDate,
-	(SELECT SUM(Inv.UnitPrice)
-		FROM Sales.InvoiceLines Inv
-		WHERE Inv.InvoiceLineID = il.InvoiceLineID) AS Price
-FROM Warehouse.StockItemTransactions sit 
-JOIN Sales.Customers c ON sit.CustomerID = c.CustomerID
-JOIN Sales.Invoices i ON sit.InvoiceID = i.InvoiceID
-JOIN Sales.InvoiceLines il ON i.InvoiceID = il.InvoiceID
-JOIN Purchasing.Suppliers s ON sit.SupplierID = s.SupplierID
+SELECT * FROM (
+SELECT o.SalespersonPersonID,
+p.FullName AS SalesPersonName,
+o.CustomerID,
+c.CustomerName AS CustomerName,
+o.OrderDate,
+ol.Quantity*ol.UnitPrice AS Total,
+ROW_NUMBER() OVER (PARTITION BY o.SalespersonPersonID ORDER BY o.OrderDate DESC) AS lastsales
+FROM Sales.Orders AS o
+JOIN Sales.OrderLines AS ol ON o.OrderID=ol.OrderID
+JOIN Application.People AS p ON o.SalespersonPersonID=p.PersonID
+JOIN Sales.Customers AS c ON c.CustomerID=o.CustomerID
+) AS t
+WHERE t.lastsales = 1;
