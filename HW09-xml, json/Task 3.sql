@@ -1,9 +1,9 @@
-/*3. В таблице Warehouse.StockItems в колонке CustomFields есть данные в JSON.
-Написать SELECT для вывода:
+/*3. Р’ С‚Р°Р±Р»РёС†Рµ Warehouse.StockItems РІ РєРѕР»РѕРЅРєРµ CustomFields РµСЃС‚СЊ РґР°РЅРЅС‹Рµ РІ JSON.
+РќР°РїРёСЃР°С‚СЊ SELECT РґР»СЏ РІС‹РІРѕРґР°:
 - StockItemID
 - StockItemName
-- CountryOfManufacture (из CustomFields)
-- FirstTag (из поля CustomFields, первое значение из массива Tags)*/
+- CountryOfManufacture (РёР· CustomFields)
+- FirstTag (РёР· РїРѕР»СЏ CustomFields, РїРµСЂРІРѕРµ Р·РЅР°С‡РµРЅРёРµ РёР· РјР°СЃСЃРёРІР° Tags)*/
 
 select	  StockItemID
 		, StockItemName
