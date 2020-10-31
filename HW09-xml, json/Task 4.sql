@@ -1,20 +1,19 @@
-/* 4. Найти в StockItems строки, где есть тэг "Vintage".
-Вывести:
+/* 4. РќР°Р№С‚Рё РІ StockItems СЃС‚СЂРѕРєРё, РіРґРµ РµСЃС‚СЊ С‚СЌРі "Vintage".
+Р’С‹РІРµСЃС‚Рё:
 - StockItemID
 - StockItemName
-- (опционально) все теги (из CustomFields) через запятую в одном поле
+- (РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ) РІСЃРµ С‚РµРіРё (РёР· CustomFields) С‡РµСЂРµР· Р·Р°РїСЏС‚СѓСЋ РІ РѕРґРЅРѕРј РїРѕР»Рµ
 
-Тэги искать в поле CustomFields, а не в Tags.
-Запрос написать через функции работы с JSON.
-Для поиска использовать равенство, использовать LIKE запрещено.
+РўСЌРіРё РёСЃРєР°С‚СЊ РІ РїРѕР»Рµ CustomFields, Р° РЅРµ РІ Tags.
+Р—Р°РїСЂРѕСЃ РЅР°РїРёСЃР°С‚СЊ С‡РµСЂРµР· С„СѓРЅРєС†РёРё СЂР°Р±РѕС‚С‹ СЃ JSON.
+Р”Р»СЏ РїРѕРёСЃРєР° РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ СЂР°РІРµРЅСЃС‚РІРѕ, РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ LIKE Р·Р°РїСЂРµС‰РµРЅРѕ.
 
-Должно быть в таком виде:
+Р”РѕР»Р¶РЅРѕ Р±С‹С‚СЊ РІ С‚Р°РєРѕРј РІРёРґРµ:
 ... where ... = 'Vintage'
 
-Так принято не будет:
+РўР°Рє РїСЂРёРЅСЏС‚Рѕ РЅРµ Р±СѓРґРµС‚:
 ... where ... Tags like '%Vintage%'
-... where ... CustomFields like '%Vintage%'
-*/
+... where ... CustomFields like '%Vintage%'. */
 select StockItemID, StockItemName,(select json_query((select top 1 CustomFields as CustomFields from Warehouse.StockItems where StockItemID = t.StockItemID),'$.Tags')) as Tags
 from Warehouse.StockItems t
 where (select json_value((select top 1 CustomFields as CustomFields from Warehouse.StockItems where StockItemID = t.StockItemID),'$.Tags[0]')) = 'Vintage' or (select json_value((select top 1 CustomFields as CustomFields from Warehouse.StockItems where StockItemID = t.StockItemID),'$.Tags[1]')) = 'Vintage' or(select json_value((select top 1 CustomFields as CustomFields from Warehouse.StockItems where StockItemID = t.StockItemID),'$.Tags[2]')) = 'Vintage'
