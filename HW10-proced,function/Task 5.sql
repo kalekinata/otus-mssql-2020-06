@@ -1,5 +1,5 @@
-/*5. Опционально. Переписать процедуру kitchen sink с множеством входных параметров по поиску в заказах на динамический SQL. Сравнить планы запроса.
-Текст процедуры в материалах к занятию в файле 70_Kitchen_sink_HomeTask.sql */
+/*5. РћРїС†РёРѕРЅР°Р»СЊРЅРѕ. РџРµСЂРµРїРёСЃР°С‚СЊ РїСЂРѕС†РµРґСѓСЂСѓ kitchen sink СЃ РјРЅРѕР¶РµСЃС‚РІРѕРј РІС…РѕРґРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ РїРѕ РїРѕРёСЃРєСѓ РІ Р·Р°РєР°Р·Р°С… РЅР° РґРёРЅР°РјРёС‡РµСЃРєРёР№ SQL. РЎСЂР°РІРЅРёС‚СЊ РїР»Р°РЅС‹ Р·Р°РїСЂРѕСЃР°.
+РўРµРєСЃС‚ РїСЂРѕС†РµРґСѓСЂС‹ РІ РјР°С‚РµСЂРёР°Р»Р°С… Рє Р·Р°РЅСЏС‚РёСЋ РІ С„Р°Р№Р»Рµ 70_Kitchen_sink_HomeTask.sql */
 
 CREATE PROCEDURE dbo.CustomerSearch_KitchenSinkOtus
   @CustomerID            int            = NULL,
@@ -11,9 +11,9 @@ CREATE PROCEDURE dbo.CustomerSearch_KitchenSinkOtus
   @MaxAccountOpenedDate  date           = NULL,
   @DeliveryCityID        int            = NULL,
   @IsOnCreditHold        bit            = NULL,
-  @OrdersCount			 INT			= NULL, 
-  @PersonID				 INT			= NULL, 
-  @DeliveryStateProvince INT			= NULL,
+  @OrdersCount		 int		= NULL, 
+  @PersonID		 int		= NULL, 
+  @DeliveryStateProvince int		= NULL,
   @PrimaryContactPersonIDIsEmployee BIT = NULL
 
 AS
@@ -70,10 +70,10 @@ CREATE PROCEDURE dbo.CustomerSearch_KitchenSinkDinamic
   @MaxAccountOpenedDate  date           = NULL,
   @DeliveryCityID        int            = NULL,
   @IsOnCreditHold        bit            = NULL,
-  @OrdersCount			 INT			= NULL, 
-  @PersonID				 INT			= NULL, 
-  @DeliveryStateProvince INT			= NULL,
-  @PrimaryContactPersonIDIsEmployee BIT = NULL
+  @OrdersCount		 int		= NULL, 
+  @PersonID		 int		= NULL, 
+  @DeliveryStateProvince int		= NULL,
+  @PrimaryContactPersonIDIsEmployee bit = NULL
 
 AS
 BEGIN
@@ -81,53 +81,55 @@ BEGIN
   DECLARE @sql nvarchar(max), @param nvarchar(max);
 
   SET @param = N'@CustomerID            int,
-				 @CustomerName          nvarchar(100),
-				 @BillToCustomerID      int,
-				 @CustomerCategoryID    int,
-				 @BuyingGroupID         int,
-				 @MinAccountOpenedDate  date,
-				 @MaxAccountOpenedDate  date,
-				 @DeliveryCityID        int,
-				 @IsOnCreditHold        bit,
-				 @OrdersCount			int, 
-				 @PersonID				int, 
-				 @DeliveryStateProvince int,
-				 @PrimaryContactPersonIDIsEmployee bit';
+		 @CustomerName          nvarchar(100),
+		 @BillToCustomerID      int,
+		 @CustomerCategoryID    int,
+		 @BuyingGroupID         int,
+		 @MinAccountOpenedDate  date,
+		 @MaxAccountOpenedDate  date,
+		 @DeliveryCityID        int,
+		 @IsOnCreditHold        bit,
+		 @OrdersCount		int, 
+		 @PersonID		int, 
+		 @DeliveryStateProvince int,
+		 @PrimaryContactPersonIDIsEmployee bit';
   
  SET @sql = 'SELECT CustomerID, CustomerName, IsOnCreditHold
-			 FROM Sales.Customers c
-			 JOIN Application.People p ON p.PersonID = c.PrimaryContactPersonID
-			 JOIN Application.Cities sa ON sa.CityID = c.DeliveryCityID
-			 WHERE 1=1 '
-	IF @CustomerID IS NOT NULL
-		SET @sql = @sql + 'AND c.CustomerID = @CustomerID '
-	IF @CustomerName IS NOT NULL
-		SET @sql = @sql + 'AND c.CustomerName LIKE @CustomerName '
-	IF @BillToCustomerID IS NOT NULL
-		SET @sql = @sql + 'AND c.BillToCustomerID = @BillToCustomerID '
-	IF @CustomerCategoryID IS NOT NULL
-		SET @sql = @sql + 'AND c.CustomerCategoryID = @CustomerCategoryID '
-	IF @BuyingGroupID IS NOT NULL
-		SET @sql = @sql + 'AND c.BuyingGroupID = @BuyingGroupID '
-	SET @sql = @sql + 'AND c.AccountOpenedDate >= COALESCE(@MinAccountOpenedDate, c.AccountOpenedDate) '
-	SET @sql = @sql + 'AND c.AccountOpenedDate >= COALESCE(@MaxAccountOpenedDate, c.AccountOpenedDate) '
-	IF @DeliveryCityID IS NOT NULL
-		SET @sql = @sql + 'AND c.DeliveryCityID = @DeliveryCityID '
-	IF @IsOnCreditHold IS NOT NULL
-		SET @sql = @sql + 'AND c.IsOnCreditHold = @IsOnCreditHold '
-	IF @OrdersCount IS NOT NULL
-		SET @sql = @sql + 'AND (SELECT COUNT(*)
-								FROM Sales.Orders
-								WHERE Orders.CustomerID = c.CustomerID) >= @OrdersCount '
-	IF @PersonID IS NOT NULL
-		SET @sql = @sql + 'AND c.PrimaryContactPersonID = @PersonID '
-	IF @DeliveryStateProvince IS NOT NULL
-		SET @sql = @sql + 'AND sa.StateProvinceID = @DeliveryStateProvince '
-	IF @PrimaryContactPersonIDIsEmployee IS NOT NULL
-		SET @sql = @sql + 'AND p.IsEmployee = @PrimaryContactPersonIDIsEmployee '
-
-	EXEC sys.sp_executesql @sql, @param,
-	@CustomerID, @CustomerName, @BillToCustomerID, @CustomerCategoryID, @BuyingGroupID, @MinAccountOpenedDate,  @MaxAccountOpenedDate, @DeliveryCityID, @IsOnCreditHold, @OrdersCount, @PersonID, @DeliveryStateProvince, @PrimaryContactPersonIDIsEmployee;
+		FROM Sales.Customers c
+		JOIN Application.People p ON p.PersonID = c.PrimaryContactPersonID
+		JOIN Application.Cities sa ON sa.CityID = c.DeliveryCityID
+		WHERE 1=1 '
+ IF @CustomerID IS NOT NULL
+ 	SET @sql = @sql + 'AND c.CustomerID = @CustomerID '
+ IF @CustomerName IS NOT NULL
+ 	SET @sql = @sql + 'AND c.CustomerName LIKE @CustomerName '
+ IF @BillToCustomerID IS NOT NULL
+ 	SET @sql = @sql + 'AND c.BillToCustomerID = @BillToCustomerID '
+ IF @CustomerCategoryID IS NOT NULL
+ 	SET @sql = @sql + 'AND c.CustomerCategoryID = @CustomerCategoryID '
+ IF @BuyingGroupID IS NOT NULL
+ 	SET @sql = @sql + 'AND c.BuyingGroupID = @BuyingGroupID '
+ SET @sql = @sql + 'AND c.AccountOpenedDate >= COALESCE(@MinAccountOpenedDate, c.AccountOpenedDate) '
+ SET @sql = @sql + 'AND c.AccountOpenedDate >= COALESCE(@MaxAccountOpenedDate, c.AccountOpenedDate) '
+ IF @DeliveryCityID IS NOT NULL
+ 	SET @sql = @sql + 'AND c.DeliveryCityID = @DeliveryCityID '
+ IF @IsOnCreditHold IS NOT NULL
+ 	SET @sql = @sql + 'AND c.IsOnCreditHold = @IsOnCreditHold '
+ IF @OrdersCount IS NOT NULL
+ 	SET @sql = @sql + 'AND (SELECT COUNT(*)
+				FROM Sales.Orders
+				WHERE Orders.CustomerID = c.CustomerID) >= @OrdersCount '
+ IF @PersonID IS NOT NULL
+ 	SET @sql = @sql + 'AND c.PrimaryContactPersonID = @PersonID '
+ IF @DeliveryStateProvince IS NOT NULL
+ 	SET @sql = @sql + 'AND sa.StateProvinceID = @DeliveryStateProvince '
+ IF @PrimaryContactPersonIDIsEmployee IS NOT NULL
+ 	SET @sql = @sql + 'AND p.IsEmployee = @PrimaryContactPersonIDIsEmployee '
+ 
+ EXEC sys.sp_executesql @sql, @param,
+ @CustomerID, @CustomerName, @BillToCustomerID, @CustomerCategoryID, @BuyingGroupID,
+ @MinAccountOpenedDate,  @MaxAccountOpenedDate, @DeliveryCityID, @IsOnCreditHold,
+ @OrdersCount, @PersonID, @DeliveryStateProvince, @PrimaryContactPersonIDIsEmployee;
 
 END;
 
@@ -164,5 +166,5 @@ EXEC dbo.CustomerSearch_KitchenSinkDinamic
  @PrimaryContactPersonIDIsEmployee = NULL
 
 
-/* План выполнения процедуры с ипользованием динамического sql по стоимости = 0,003 меньше, чем план выполнения процедуры с параметрами = 0,015.
-А также план выполнения процедуры с параметрами более разветвлён, относительно плана  выполнения процедуры с ипользованием динамического sql. */
+/* РџР»Р°РЅ РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµРґСѓСЂС‹ СЃ РёРїРѕР»СЊР·РѕРІР°РЅРёРµРј РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ sql РїРѕ СЃС‚РѕРёРјРѕСЃС‚Рё = 0,003 РјРµРЅСЊС€Рµ, С‡РµРј РїР»Р°РЅ РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµРґСѓСЂС‹ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё = 0,015.
+Рђ С‚Р°РєР¶Рµ РїР»Р°РЅ РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµРґСѓСЂС‹ СЃ РїР°СЂР°РјРµС‚СЂР°РјРё Р±РѕР»РµРµ СЂР°Р·РІРµС‚РІР»С‘РЅ, РѕС‚РЅРѕСЃРёС‚РµР»СЊРЅРѕ РїР»Р°РЅР°  РІС‹РїРѕР»РЅРµРЅРёСЏ РїСЂРѕС†РµРґСѓСЂС‹ СЃ РёРїРѕР»СЊР·РѕРІР°РЅРёРµРј РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ sql. */
