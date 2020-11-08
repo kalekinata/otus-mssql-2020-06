@@ -1,11 +1,11 @@
-/* 2. Написать хранимую процедуру с входящим параметром СustomerID, выводящую сумму покупки по этому клиенту.
-Использовать таблицы :
+/* 2. РќР°РїРёСЃР°С‚СЊ С…СЂР°РЅРёРјСѓСЋ РїСЂРѕС†РµРґСѓСЂСѓ СЃ РІС…РѕРґСЏС‰РёРј РїР°СЂР°РјРµС‚СЂРѕРј РЎustomerID, РІС‹РІРѕРґСЏС‰СѓСЋ СЃСѓРјРјСѓ РїРѕРєСѓРїРєРё РїРѕ СЌС‚РѕРјСѓ РєР»РёРµРЅС‚Сѓ.
+РСЃРїРѕР»СЊР·РѕРІР°С‚СЊ С‚Р°Р±Р»РёС†С‹ :
 Sales.Customers
 Sales.Invoices
-Sales.InvoiceLines*/
+Sales.InvoiceLines. */
 
 CREATE PROCEDURE sum_customer_sales
-	@СustomerID int
+	@Г‘ustomerID int
 AS
 	BEGIN
 		SELECT	 c.CustomerID
@@ -14,7 +14,7 @@ AS
 		FROM Sales.Customers c
 			JOIN Sales.Invoices i ON c.CustomerID = i.CustomerID
 			JOIN Sales.InvoiceLines il ON i.InvoiceID = il.InvoiceID
-		WHERE c.CustomerID = @СustomerID and i.CustomerID = @СustomerID
+		WHERE c.CustomerID = @Г‘ustomerID and i.CustomerID = @Г‘ustomerID
 		GROUP BY c.CustomerID, c.CustomerName
 	END
 
