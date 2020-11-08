@@ -146,7 +146,7 @@ EXEC dbo.CustomerSearch_KitchenSinkOtus
  @DeliveryCityID = NULL,
  @IsOnCreditHold = NULL,
  @OrdersCount = NULL, 
- @PersonID	= NULL, 
+ @PersonID = NULL, 
  @DeliveryStateProvince = NULL,
  @PrimaryContactPersonIDIsEmployee = NULL
 
@@ -161,7 +161,7 @@ EXEC dbo.CustomerSearch_KitchenSinkDinamic
  @DeliveryCityID = NULL,
  @IsOnCreditHold = NULL,
  @OrdersCount = NULL, 
- @PersonID	= NULL, 
+ @PersonID = NULL, 
  @DeliveryStateProvince = NULL,
  @PrimaryContactPersonIDIsEmployee = NULL
 
