@@ -1,0 +1,3 @@
+select part into #child from SplitStringCLR('{"name":"Даша", "age":8},{"name":"Настя", "age":8},{"name":"Ира", "age":7},{"name":"Василиса", "age":7},{"name":"Арина", "age":4},{"name":"Настя", "age":13},{"name":"Яна", "age":13},{"name":"Лена", "age":12},{"name":"Лена", "age":14},{"name":"Аня", "age":12},{"name":"Ульяна", "age":11},{"name":"Таня", "age":10},{"name":"Полина", "age":10},{"name":"Василиса", "age":10},{"name":"Лев", "age":14},{"name":"Матвей", "age":13},{"name":"Марьяна", "age":12},{"name":"Диана", "age":12},{"name":"Алёна", "age":8}, {"name":"Дарина", "age":13},{"name":"Дарина", "age":6},{"name":"Вова", "age":4}', '},')
+
+select * from #child
