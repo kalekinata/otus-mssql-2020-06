@@ -1,13 +1,13 @@
-/*Таблицы routes и stopping соединены внешними ключами и через таблицу routes_stopping, так как маршрут может указываться от начальной до конечной точки, либо от начальной точки до остановки, необходимой для пассажира, с соответствии с этим высчитывается цена билета*/
+/*РўР°Р±Р»РёС†С‹ routes Рё stopping СЃРѕРµРґРёРЅРµРЅС‹ РІРЅРµС€РЅРёРјРё РєР»СЋС‡Р°РјРё Рё С‡РµСЂРµР· С‚Р°Р±Р»РёС†Сѓ routes_stopping, С‚Р°Рє РєР°Рє РјР°СЂС€СЂСѓС‚ РјРѕР¶РµС‚ СѓРєР°Р·С‹РІР°С‚СЊСЃСЏ РѕС‚ РЅР°С‡Р°Р»СЊРЅРѕР№ РґРѕ РєРѕРЅРµС‡РЅРѕР№ С‚РѕС‡РєРё, Р»РёР±Рѕ РѕС‚ РЅР°С‡Р°Р»СЊРЅРѕР№ С‚РѕС‡РєРё РґРѕ РѕСЃС‚Р°РЅРѕРІРєРё, РЅРµРѕР±С…РѕРґРёРјРѕР№ РґР»СЏ РїР°СЃСЃР°Р¶РёСЂР°, СЃ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРё СЃ СЌС‚РёРј РІС‹СЃС‡РёС‚С‹РІР°РµС‚СЃСЏ С†РµРЅР° Р±РёР»РµС‚Р°*/
 
 -- ************************************** [cars]
 
-CREATE TABLE [cars] --Вагон
+CREATE TABLE [cars] --Р’Р°РіРѕРЅ
 (
- [id]      int NOT NULL , --id вагона
- [dadd]    datetime NOT NULL , --дата добавления записи
- [seats]   int NOT NULL , --количество мест в вагоне
- [type_id] int NOT NULL , --id типа вагона
+ [id]      int NOT NULL , --id РІР°РіРѕРЅР°
+ [dadd]    datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [seats]   int NOT NULL , --РєРѕР»РёС‡РµСЃС‚РІРѕ РјРµСЃС‚ РІ РІР°РіРѕРЅРµ
+ [type_id] int NOT NULL , --id С‚РёРїР° РІР°РіРѕРЅР°
 
 
  CONSTRAINT [PK_cars] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -25,15 +25,15 @@ GO
 
 -- ************************************** [cars_type]
 
-CREATE TABLE [cars_type] --тип вагона
+CREATE TABLE [cars_type] --С‚РёРї РІР°РіРѕРЅР°
 (
- [id]            int NOT NULL , --id вагона
- [dadd]          datetime NOT NULL , --дата добавления записи
- [type]          varchar(60) NOT NULL , --тип вагона
- [service_class] varchar(20) NOT NULL , --класс обслуживания
- [min_seats]     int NOT NULL , --минимальное количество мест в вагоне
- [max_seats]     int NOT NULL , --максимальное количество мест в вагоне
- [markup]        float NOT NULL , --наценка за класс обслуживания+тип вагона
+ [id]            int NOT NULL , --id РІР°РіРѕРЅР°
+ [dadd]          datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [type]          varchar(60) NOT NULL , --С‚РёРї РІР°РіРѕРЅР°
+ [service_class] varchar(20) NOT NULL , --РєР»Р°СЃСЃ РѕР±СЃР»СѓР¶РёРІР°РЅРёСЏ
+ [min_seats]     int NOT NULL , --РјРёРЅРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РјРµСЃС‚ РІ РІР°РіРѕРЅРµ
+ [max_seats]     int NOT NULL , --РјР°РєСЃРёРјР°Р»СЊРЅРѕРµ РєРѕР»РёС‡РµСЃС‚РІРѕ РјРµСЃС‚ РІ РІР°РіРѕРЅРµ
+ [markup]        float NOT NULL , --РЅР°С†РµРЅРєР° Р·Р° РєР»Р°СЃСЃ РѕР±СЃР»СѓР¶РёРІР°РЅРёСЏ+С‚РёРї РІР°РіРѕРЅР°
 
 
  CONSTRAINT [PK_cars_type] PRIMARY KEY CLUSTERED ([id] ASC)
@@ -42,17 +42,17 @@ GO
 
 -- ************************************** [passengers]
 
-CREATE TABLE [passengers] --пассажир
+CREATE TABLE [passengers] --РїР°СЃСЃР°Р¶РёСЂ
 (
- [id]          int NOT NULL , --id пассажира
- [dadd]        datetime NOT NULL , --дата добавления записи
- [first_name]  varchar(20) NOT NULL , --имя
- [middle_name] varchar(20) NOT NULL , --отчество
- [last_name]   varchar(20) NOT NULL , --фамилия
- [birthday]    date NOT NULL , --дата рождения
- [passport]    bigint NOT NULL , --данные паспорта
- [phone]       varchar(20) NOT NULL , --номер телефона
- [email]       varchar(30) NOT NULL , --почта
+ [id]          int NOT NULL , --id РїР°СЃСЃР°Р¶РёСЂР°
+ [dadd]        datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [first_name]  varchar(20) NOT NULL , --РёРјСЏ
+ [middle_name] varchar(20) NOT NULL , --РѕС‚С‡РµСЃС‚РІРѕ
+ [last_name]   varchar(20) NOT NULL , --С„Р°РјРёР»РёСЏ
+ [birthday]    date NOT NULL , --РґР°С‚Р° СЂРѕР¶РґРµРЅРёСЏ
+ [passport]    bigint NOT NULL , --РґР°РЅРЅС‹Рµ РїР°СЃРїРѕСЂС‚Р°
+ [phone]       varchar(20) NOT NULL , --РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
+ [email]       varchar(30) NOT NULL , --РїРѕС‡С‚Р°
 
 
  CONSTRAINT [PK_passengers] PRIMARY KEY CLUSTERED ([id] ASC)
@@ -61,12 +61,12 @@ GO
 
 -- ************************************** [pay]
 
-CREATE TABLE [pay] --статус оплаты билета
+CREATE TABLE [pay] --СЃС‚Р°С‚СѓСЃ РѕРїР»Р°С‚С‹ Р±РёР»РµС‚Р°
 (
- [id]        int NOT NULL , --id билета
- [dadd]      datetime NOT NULL , --дата добавления записи
- [condition] bit NOT NULL , --статус оплаты билета
- [ticket_id] int NOT NULL , --id билета
+ [id]        int NOT NULL , --id Р±РёР»РµС‚Р°
+ [dadd]      datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [condition] bit NOT NULL , --СЃС‚Р°С‚СѓСЃ РѕРїР»Р°С‚С‹ Р±РёР»РµС‚Р°
+ [ticket_id] int NOT NULL , --id Р±РёР»РµС‚Р°
 
 
  CONSTRAINT [PK_pay] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -84,18 +84,18 @@ GO
 
 -- ************************************** [routes]
 
-CREATE TABLE [routes] --маршрут
+CREATE TABLE [routes] --РјР°СЂС€СЂСѓС‚
 (
- [id]          int NOT NULL , --id маршрута
- [dadd]        datetime NOT NULL , --дата добавления записи
- [beg_time]    time(7) NOT NULL , --время начала пути
- [end_time]    time(7) NOT NULL , --время окончания пути
- [duration]    varchar(70) NOT NULL , --время в пути
- [distance]    float NOT NULL , --протяжённость пути
- [price_100km] float NOT NULL , --цена за километр
- [price_place] float NOT NULL , --цена за место
- [bed_point]   int NOT NULL , --начальная точка
- [end_point]   int NOT NULL , --конечная точка
+ [id]          int NOT NULL , --id РјР°СЂС€СЂСѓС‚Р°
+ [dadd]        datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [beg_time]    time(7) NOT NULL , --РІСЂРµРјСЏ РЅР°С‡Р°Р»Р° РїСѓС‚Рё
+ [end_time]    time(7) NOT NULL , --РІСЂРµРјСЏ РѕРєРѕРЅС‡Р°РЅРёСЏ РїСѓС‚Рё
+ [duration]    varchar(70) NOT NULL , --РІСЂРµРјСЏ РІ РїСѓС‚Рё
+ [distance]    float NOT NULL , --РїСЂРѕС‚СЏР¶С‘РЅРЅРѕСЃС‚СЊ РїСѓС‚Рё
+ [price_100km] float NOT NULL , --С†РµРЅР° Р·Р° РєРёР»РѕРјРµС‚СЂ
+ [price_place] float NOT NULL , --С†РµРЅР° Р·Р° РјРµСЃС‚Рѕ
+ [bed_point]   int NOT NULL , --РЅР°С‡Р°Р»СЊРЅР°СЏ С‚РѕС‡РєР°
+ [end_point]   int NOT NULL , --РєРѕРЅРµС‡РЅР°СЏ С‚РѕС‡РєР°
 
 
  CONSTRAINT [PK_routes] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -121,14 +121,14 @@ GO
 
 -- ************************************** [routes_stopping]
 
-CREATE TABLE [routes_stopping] --остановка
+CREATE TABLE [routes_stopping] --РѕСЃС‚Р°РЅРѕРІРєР°
 (
- [id]       int NOT NULL , --id остановки
- [dadd]     datetime NOT NULL , --дата добавления записи
- [time]     time(7) NOT NULL , --время прибытия на остановку
- [km]       float NOT NULL , --дистанция до остановки
- [stop_id]  int NOT NULL , --id остановки
- [route_id] int NOT NULL , --id пути
+ [id]       int NOT NULL , --id РѕСЃС‚Р°РЅРѕРІРєРё
+ [dadd]     datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [time]     time(7) NOT NULL , --РІСЂРµРјСЏ РїСЂРёР±С‹С‚РёСЏ РЅР° РѕСЃС‚Р°РЅРѕРІРєСѓ
+ [km]       float NOT NULL , --РґРёСЃС‚Р°РЅС†РёСЏ РґРѕ РѕСЃС‚Р°РЅРѕРІРєРё
+ [stop_id]  int NOT NULL , --id РѕСЃС‚Р°РЅРѕРІРєРё
+ [route_id] int NOT NULL , --id РїСѓС‚Рё
 
 
  CONSTRAINT [PK_routes_stopping] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -154,11 +154,11 @@ GO
 
 -- ************************************** [stopping]
 
-CREATE TABLE [stopping] --остановка
+CREATE TABLE [stopping] --РѕСЃС‚Р°РЅРѕРІРєР°
 (
- [id]    int NOT NULL , --id остановка
- [dadd]  datetime NOT NULL , --дата добавления записи
- [title] varchar(30) NOT NULL , --название остановки
+ [id]    int NOT NULL , --id РѕСЃС‚Р°РЅРѕРІРєР°
+ [dadd]  datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [title] varchar(30) NOT NULL , --РЅР°Р·РІР°РЅРёРµ РѕСЃС‚Р°РЅРѕРІРєРё
 
 
  CONSTRAINT [PK_stopping] PRIMARY KEY CLUSTERED ([id] ASC)
@@ -167,13 +167,13 @@ GO
 
 -- ************************************** [structure]
 
-CREATE TABLE [structure] --состав поезда
+CREATE TABLE [structure] --СЃРѕСЃС‚Р°РІ РїРѕРµР·РґР°
 (
- [id]       int NOT NULL , --id остановки
- [dadd]     datetime NOT NULL , --дата добавления записи
- [status]   varchar(1) NOT NULL , --статус вагона
- [train_id] int NOT NULL , --id поезда
- [car_id]   int NOT NULL , --id вагона
+ [id]       int NOT NULL , --id РѕСЃС‚Р°РЅРѕРІРєРё
+ [dadd]     datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [status]   varchar(1) NOT NULL , --СЃС‚Р°С‚СѓСЃ РІР°РіРѕРЅР°
+ [train_id] int NOT NULL , --id РїРѕРµР·РґР°
+ [car_id]   int NOT NULL , --id РІР°РіРѕРЅР°
 
 
  CONSTRAINT [PK_structure] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -199,16 +199,16 @@ GO
 
 -- ************************************** [ticket]
 
-CREATE TABLE [ticket] --билет
+CREATE TABLE [ticket] --Р±РёР»РµС‚
 (
- [id]        int NOT NULL , --id билета
- [dadd]      datetime NOT NULL , --дата добавления записи
- [seats_id]  int NOT NULL , --id места
- [price]     float NOT NULL , --цена билета
- [pass_id]   int NOT NULL , --id пассажира
- [stop_id]   int NULL , --id остановки
- [ttable_id] int NOT NULL , --id расписания
- [car_id]    int NOT NULL , --id вагона
+ [id]        int NOT NULL , --id Р±РёР»РµС‚Р°
+ [dadd]      datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [seats_id]  int NOT NULL , --id РјРµСЃС‚Р°
+ [price]     float NOT NULL , --С†РµРЅР° Р±РёР»РµС‚Р°
+ [pass_id]   int NOT NULL , --id РїР°СЃСЃР°Р¶РёСЂР°
+ [stop_id]   int NULL , --id РѕСЃС‚Р°РЅРѕРІРєРё
+ [ttable_id] int NOT NULL , --id СЂР°СЃРїРёСЃР°РЅРёСЏ
+ [car_id]    int NOT NULL , --id РІР°РіРѕРЅР°
 
 
  CONSTRAINT [PK_ticket] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -250,13 +250,13 @@ GO
 
 -- ************************************** [timetable]
 
-CREATE TABLE [timetable] --расписание
+CREATE TABLE [timetable] --СЂР°СЃРїРёСЃР°РЅРёРµ
 (
- [id]          int NOT NULL , --id расписания
- [dadd]        datetime NOT NULL , --дата добавления записи
- [flight_date] date NOT NULL , --дата отправления
- [train_id]    int NOT NULL , --id поезда
- [route_id]    int NOT NULL , --id пути
+ [id]          int NOT NULL , --id СЂР°СЃРїРёСЃР°РЅРёСЏ
+ [dadd]        datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [flight_date] date NOT NULL , --РґР°С‚Р° РѕС‚РїСЂР°РІР»РµРЅРёСЏ
+ [train_id]    int NOT NULL , --id РїРѕРµР·РґР°
+ [route_id]    int NOT NULL , --id РїСѓС‚Рё
 
 
  CONSTRAINT [PK_timetable] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -282,13 +282,13 @@ GO
 
 -- ************************************** [trains]
 
-CREATE TABLE [trains] --поезд
+CREATE TABLE [trains] --РїРѕРµР·Рґ
 (
- [id]     int NOT NULL , --id поезда
- [dadd]   datetime NOT NULL , --дата добавления записи
- [number] varchar(10) NOT NULL , --номер поезда
- [cars]   int NOT NULL , --вагоны
- [m_id]   int NOT NULL , --id модели вагона
+ [id]     int NOT NULL , --id РїРѕРµР·РґР°
+ [dadd]   datetime NOT NULL , --РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [number] varchar(10) NOT NULL , --РЅРѕРјРµСЂ РїРѕРµР·РґР°
+ [cars]   int NOT NULL , --РІР°РіРѕРЅС‹
+ [m_id]   int NOT NULL , --id РјРѕРґРµР»Рё РІР°РіРѕРЅР°
 
 
  CONSTRAINT [PK_trains] PRIMARY KEY CLUSTERED ([id] ASC),
@@ -306,13 +306,13 @@ GO
 
 -- ************************************** [trains_model]
 
-CREATE TABLE [trains_model] --модель поезда
+CREATE TABLE [trains_model] --РјРѕРґРµР»СЊ РїРѕРµР·РґР°
 (
- [id]     int NOT NULL , --id модели
- [dadd]   datetime NOT NULL , -- дата добавления записи
- [title]  varchar(50) NOT NULL , --название вагона
- [type]   varchar(50) NOT NULL , --тип вагона
- [markup] float NOT NULL , --наценка за тип вагона
+ [id]     int NOT NULL , --id РјРѕРґРµР»Рё
+ [dadd]   datetime NOT NULL , -- РґР°С‚Р° РґРѕР±Р°РІР»РµРЅРёСЏ Р·Р°РїРёСЃРё
+ [title]  varchar(50) NOT NULL , --РЅР°Р·РІР°РЅРёРµ РІР°РіРѕРЅР°
+ [type]   varchar(50) NOT NULL , --С‚РёРї РІР°РіРѕРЅР°
+ [markup] float NOT NULL , --РЅР°С†РµРЅРєР° Р·Р° С‚РёРї РІР°РіРѕРЅР°
 
 
  CONSTRAINT [PK_trains_model] PRIMARY KEY CLUSTERED ([id] ASC)
