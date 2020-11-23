@@ -1,8 +1,8 @@
--- В таблицах используются кластеризованные индексы в качестве первичных ключей. А некластеризованные индексы используются для выполнения запросов по выводу информации.
+-- Р’ С‚Р°Р±Р»РёС†Р°С… РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Рµ РёРЅРґРµРєСЃС‹ РІ РєР°С‡РµСЃС‚РІРµ РїРµСЂРІРёС‡РЅС‹С… РєР»СЋС‡РµР№. Рђ РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Рµ РёРЅРґРµРєСЃС‹ РёСЃРїРѕР»СЊР·СѓСЋС‚СЃСЏ РґР»СЏ РІС‹РїРѕР»РЅРµРЅРёСЏ Р·Р°РїСЂРѕСЃРѕРІ РїРѕ РІС‹РІРѕРґСѓ РёРЅС„РѕСЂРјР°С†РёРё.
 
 create table cars
 (
-	id int PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id int PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
 	[type_id] INT FOREIGN KEY REFERENCES cars_type(id) NOT NULL,
 	seats int NOT NULL
@@ -10,10 +10,10 @@ create table cars
 
 create table cars_type
 (
-	id int PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id int PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
-	[type] nvarchar(100) NOT NULL, --некластеризованный индекс
-	service_class nvarchar(20) NOT NULL, --некластеризованный индекс
+	[type] nvarchar(100) NOT NULL, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	service_class nvarchar(20) NOT NULL, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	min_seats int NULL,
 	max_seats int NULL,
 	markup decimal(10,2) NOT NULL
@@ -21,7 +21,7 @@ create table cars_type
 
 CREATE TABLE trains_model
 (
-	id int PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id int PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
 	title NVARCHAR(50) NOT NULL,
 	[type] NVARCHAR(50) NOT NULL,
@@ -33,7 +33,7 @@ ON trains_model(title)
 
 CREATE TABLE trains
 (
-	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
 	m_id INT FOREIGN KEY REFERENCES trains_model(id) not null,
 	number NVARCHAR(10) NOT NULL,
@@ -44,13 +44,13 @@ ALTER TABLE trains ADD CHECK(cars<20)
 
 CREATE TABLE passengers
 (
-	id INT PRIMARY KEY IDENTITY(1,1) not null, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) not null, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
 	first_name NVARCHAR(20) NOT NULL,
 	middle_name NVARCHAR(20) NOT NULL,
 	last_name NVARCHAR(20) NOT NULL,
 	birthday DATE NOT NULL,
-	passport BIGINT NOT NULL, -- некластеризованный индекс
+	passport BIGINT NOT NULL, -- РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	phone NVARCHAR(20),
 	email NVARCHAR(30)
 )
@@ -61,9 +61,9 @@ ON passengers(passport)
 
 CREATE TABLE stopping
 (
-	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
-	title NVARCHAR(30) NOT NULL --некластеризованный индекс
+	title NVARCHAR(30) NOT NULL --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 )
 
 CREATE NONCLUSTERED INDEX NT_title
@@ -72,16 +72,16 @@ ON stopping(title)
 
 CREATE TABLE [routes]
 (
-	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
-	beg_point INT FOREIGN KEY REFERENCES stopping(id) NOT NULL, -- некластеризованный индекс
-	end_point INT FOREIGN KEY REFERENCES stopping(id) NOT NULL, -- некластеризованный индекс
-	beg_time TIME NOT NULL, -- некластеризованный индекс
-	end_time TIME NOT NULL, -- некластеризованный индекс
+	beg_point INT FOREIGN KEY REFERENCES stopping(id) NOT NULL, -- РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	end_point INT FOREIGN KEY REFERENCES stopping(id) NOT NULL, -- РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	beg_time TIME NOT NULL, -- РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	end_time TIME NOT NULL, -- РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	duration NVARCHAR(40)  NOT NULL,
 	distance FLOAT NOT NULL,
 	price_100kl FLOAT NOT NULL CHECK(price_100kl>0),
-	price_place FLOAT NOT NULL -- некластеризованный индекс
+	price_place FLOAT NOT NULL -- РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 )
 
 CREATE NONCLUSTERED INDEX NT_beg_point
@@ -98,10 +98,10 @@ ON [routes](price_place)
 
 create table routes_stopping
 (
-	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
-	route_id int FOREIGN KEY REFERENCES [routes](id)not null, --некластеризованный индекс
-	stop_id int FOREIGN KEY REFERENCES stopping(id) not null, --некластеризованный индекс
+	route_id int FOREIGN KEY REFERENCES [routes](id)not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	stop_id int FOREIGN KEY REFERENCES stopping(id) not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	[time] time not null,
 	km float not null
 )
@@ -114,13 +114,13 @@ ON routes_stopping(stop_id)
 
 create table ticket
 (
-	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
 	pass_id int FOREIGN KEY REFERENCES passengers(id) not null,
-	ttable_id int FOREIGN KEY REFERENCES timetable(id) not null, --некластеризованный индекс
+	ttable_id int FOREIGN KEY REFERENCES timetable(id) not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	stop_id int FOREIGN KEY REFERENCES stopping(id),
 	car_id int FOREIGN KEY REFERENCES cars(id) not null,
-	seats_id int not null, --некластеризованный индекс
+	seats_id int not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	price float not null
 	
 )
@@ -132,11 +132,11 @@ ON ticket(ttable_id)
 
 create table structure
 (
-	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
-	train_id int FOREIGN KEY REFERENCES trains(id) not null, --некластеризованный индекс
-	car_id int FOREIGN KEY REFERENCES cars(id) not null, --некластеризованный индекс
-	[status] varchar(1) not null --некластеризованный индекс
+	train_id int FOREIGN KEY REFERENCES trains(id) not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	car_id int FOREIGN KEY REFERENCES cars(id) not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	[status] varchar(1) not null --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 )
 
 CREATE NONCLUSTERED INDEX NT_train_id
@@ -148,11 +148,11 @@ ON structure([status])
 
 create table timetable
 (
-	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) NOT NULL, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
-	train_id int FOREIGN KEY REFERENCES trains(id) not null, --некластеризованный индекс
-	route_id int FOREIGN KEY REFERENCES [routes](id) not null, --некластеризованный индекс
-	flight_date date NOT NULL --некластеризованный индекс
+	train_id int FOREIGN KEY REFERENCES trains(id) not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	route_id int FOREIGN KEY REFERENCES [routes](id) not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	flight_date date NOT NULL --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 )
 
 CREATE NONCLUSTERED INDEX NT_train_id
@@ -165,10 +165,10 @@ ON timetable(flight_date)
 
 create table pay
 (
-	id INT PRIMARY KEY IDENTITY(1,1) not null, --кластеризованный индекс
+	id INT PRIMARY KEY IDENTITY(1,1) not null, --РєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 	creat_date datetime2 NOT NULL,
-	ticket_id int FOREIGN KEY REFERENCES ticket(id) not null, --некластеризованный индекс
-	condition bit not null --некластеризованный индекс
+	ticket_id int FOREIGN KEY REFERENCES ticket(id) not null, --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
+	condition bit not null --РЅРµРєР»Р°СЃС‚РµСЂРёР·РѕРІР°РЅРЅС‹Р№ РёРЅРґРµРєСЃ
 )
 
 CREATE NONCLUSTERED INDEX NT_ticket_id
